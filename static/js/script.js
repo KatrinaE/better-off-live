@@ -16,7 +16,15 @@ $( function() {
 	.attr('class', 'd3-tip')
 	.offset([-10, 0])
 	.html(function(d) {
-	    return "<strong>" + d.title + "</strong> <p>Live: " + Math.round(d.live * 100) / 100 + "</p><p><span style='color:magenta'>" + Math.round(d.score * 100) / 100 + "</span></p>";
+	    if (d.score > 0) {
+		var color = 'orange';
+	    } else {
+		var color = 'red';
+	    }
+	    return "<p><span style='font-size:24px;'>" + d.title + "</span></p>\
+<p>Live hotttnesss: <span style='color:" + color + "'>" + Math.round(d.live_value * 100) / 100 + "</span></p>\
+<p>Regular hotttnesss: <span style='color:" + color + "'>" + Math.round(d.regular_value * 100) / 100 + "</span></p>\
+<p>Score: <span style='color:" + 'magenta' + "'>" + Math.round(d.score * 100) / 100 + "</span></p>";
 	})
 
     chart = d3.select( '#maindiv' ).append( 'svg' )
@@ -38,7 +46,7 @@ $( function() {
     console.log(data.map(function(d) { return d.title; }));
 
     y = d3.scale.linear()
-	.domain([-1, 1])//d3.max(data, function(d) { return d.score; })])
+	.domain([-1, 1])
 	.range([height, 0]);
 
     bars = chart.append('g')
@@ -47,44 +55,56 @@ $( function() {
     xAxis = d3.svg.axis()
         .scale(x)
         .ticks(20)
-        //.tickSize([100, 0])//.tickSize(-height, 0, 0)//.tickSize(6, 3, 1)
 	.orient("top");
 
     yAxis = d3.svg.axis()
         .scale(y)
-        .ticks(0)//.tickSize([100, 0])
+        .ticks(0)
         .orient("left");
 
     chart.append('g')
         .attr('class', 'x axis')
-        //.attr('transform', 'translate(0, ' + (height - margin.top) + ')')
         .call(xAxis)
     .selectAll(".tick text")
-      .call(wrap, x.rangeBand());
+	.style("font-size","0.9em")
+	.style("font-weight","bold")
+	.call(wrap, x.rangeBand());
+
+
+    // y-axis labels
+    chart.append("text")
+	.attr("class", "y label")
+	.attr("text-anchor", "end")
+	.attr("y", y(0.5))
+	.attr("dy", 1)
+	.text("Better live");
+
+    chart.append("text")
+	.attr("class", "y label")
+	.attr("text-anchor", "end")
+	.attr("y", y(-0.5))
+	.attr("dy", 1)
+	.text("Better not live");
 
     chart.append('g')
         .attr('class', 'y axis')
-       //.attr('transform', 'translate(' + margin.left + ')')
-        .call(yAxis)
-	.append("text")
-        //.attr("transform", "rotate(-90)")
-        .attr("y",-margin.left)
-        .attr("x",-(height / 2))
-        .attr("dy", "1em")
-        .style("text-anchor", "middle");
-        //.text("Difference Between Live and Studio Version");
+        .call(yAxis);
 
-    console.log(x(0))
+    chart
+	.selectAll(".label")
+	.call(wrap, 1);
+
+    // baseline (thru y = 0)
     var myLine = chart.append("svg:line")
 	.attr("x1", x(0))
 	.attr("y1", y(0))
 	.attr("x2", width)
 	.attr("y2", y(0))
-	.style("stroke", "rgb(200,200,200")//"rgb(6,120,155)");
-	.style("stroke-dasharray", ("4, 2"));
-    myLine.style("stroke-width", 2);
+	.style("stroke", "rgb(200,200,200")
+	.style("stroke-dasharray", ("4, 2"))
+	.style("stroke-width", 2);
 
-
+    // bars
     chart.selectAll(".bar")
 	.data(data)
 	.enter().append("rect")

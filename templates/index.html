@@ -1,29 +1,36 @@
+
 {% extends "layout.html" %}
 
-{% block h1 %}Fahrenheit Live{% endblock %}
+{% block title %}Better off Live{% endblock %}
+{% block h1 %}Better off Live{% endblock %}
 {% block h2 %}Which is hotter: the live version or the studio recording? {% endblock %}
 
+
 {% block description %}
-Fahrenheit Live lets you visualize which of an artist's songs did better in each 
-setting.
+Better off Live compares hotttnesss of an artist's live recordings to his/her other recordings of the same song.
 {% endblock %}
 
 {% block select %}
 <form role="form" action="/" method=get class="myform" id="main-form">
     <div class="form-inline form-group">
-      <input class="form-inline control-label myform" autofocus="" required="" name="artist" placeholder="Beyonce" id="artist">
+      <input class="form-inline control-label myform" autofocus="" required="" name="artist" placeholder="Enter an artist" id="artist">
 	<button class="btn btn-primary myform" type="submit">Search</button>
     </div>
 </form>
-
 {% endblock %}
 
 {% block msg %}
     {% if msg %}
-        {{ msg }}
+       <div class="sorry">Oh no!</div>
+       <p id="msg">{{ msg }}</p>
     {% endif %}
 {% endblock %}
 
+{% block artist %}
+   {% if data %}
+        {{ artist }}
+   {% endif %}
+{% endblock %}
 
 {% block scripts %}
     <script>var data = JSON.parse({{data|tojson|safe}});</script>

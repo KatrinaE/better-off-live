@@ -12,34 +12,42 @@ from utils import format_title, separate_versions, compare_versions
 def index():
     artist = flask.request.args.get('artist', None)
     if artist == None:
-        return flask.render_template('index.html', data=False)
+        return flask.render_template('index.html', data=False, artist=artist)
     else:
         return en_data(artist)
 
 def en_data(artist):
-    comparator = 'song_hotttnesss'
     en = pyen.Pyen()
-    raw_response = en.get('song/search', 
-                          artist = artist,
-                          bucket=['song_type', comparator], 
-                          sort=['liveness-desc'], 
-                          results=100)
-    if raw_response['songs'] == []:
+
+    try:
+        raw_response = en.get('song/search', 
+                              artist = artist,
+                              bucket=['song_type', 'song_hotttnesss'], 
+                              sort=['liveness-desc'], 
+                              results=100)
+    except pyen.PyenException, pyen.PyenConfigurationException:
         data = False
-        msg = "There are no songs for this artist in EchoNest's database."
+        msg = "Better off Live couldn't reach the EchoNest database. Please try again later."
+
     else:
-        all_songs = [format_title(song) for song in raw_response['songs']]
-        output = compare_versions(*separate_versions(all_songs))
-        if output == []:
+        if raw_response['songs'] == []:
             data = False
-            msg = "Not enough data to compare live versions to non-live versions."
+            msg = "There are no songs for %s in EchoNest's database." % artist
         else:
-            sorted_output = sorted(output, 
-                                   key=lambda d: d['live_value'] - d['regular_value'], 
-                                   reverse=True)
-            data = json.dumps(sorted_output)
-            msg = ""
-    return flask.render_template('index.html', data=data, msg=msg)
+            all_songs = [format_title(song) for song in raw_response['songs']]
+            output = compare_versions(*separate_versions(all_songs))
+            if output == []:
+                data = False
+                msg = "Not enough data on %s to compare live versions " % artist +\
+                      "to non-live versions."
+            else:
+                sorted_output = sorted(output, 
+                                       key=lambda d: d['live_value'] - d['regular_value'], 
+                                       reverse=True)
+                data = json.dumps(sorted_output)
+                msg = ""
+    finally:
+        return flask.render_template('index.html', data=data, msg=msg, artist=artist)
 
 
 if __name__ == '__main__':
