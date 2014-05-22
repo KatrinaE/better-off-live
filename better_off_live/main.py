@@ -1,16 +1,15 @@
 import sys
 import json
+import string
 import pyen
 import flask
 app = flask.Flask(__name__)
-
-from utils import format_title, separate_versions, compare_versions
-
+from .utils import format_title, separate_versions, compare_versions
 
 @app.route('/')
 @app.route('/index')
 def index():
-    artist = flask.request.args.get('artist', None)
+    artist = string.capwords(flask.request.args.get('artist', None))
     if artist == None:
         return flask.render_template('index.html', data=False, artist=artist)
     else:
@@ -32,13 +31,13 @@ def en_data(artist):
     else:
         if raw_response['songs'] == []:
             data = False
-            msg = "There are no songs for %s in EchoNest's database." % artist
+            msg = "There are no songs by %s in EchoNest's database." % artist
         else:
             all_songs = [format_title(song) for song in raw_response['songs']]
             output = compare_versions(*separate_versions(all_songs))
             if output == []:
                 data = False
-                msg = "Not enough data on %s to compare live versions " % artist +\
+                msg = "There's not enough data on %s to compare live versions " % artist +\
                       "to non-live versions."
             else:
                 sorted_output = sorted(output, 
@@ -48,7 +47,3 @@ def en_data(artist):
                 msg = ""
     finally:
         return flask.render_template('index.html', data=data, msg=msg, artist=artist)
-
-
-if __name__ == '__main__':
-    app.run()

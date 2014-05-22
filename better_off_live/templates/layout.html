@@ -7,6 +7,7 @@
 </head>
 <body>
 
+
 <div class='container' id='maindiv'>
   <h1>{% block h1 %}{% endblock %}</h1>
   <h2><small>{% block h2 %}{% endblock %}</small></h2>
@@ -15,6 +16,18 @@
 {% block msg %}{% endblock %}
   <h3 id="artist-heading">{% block artist %}{% endblock %}</h3>
 </div>
+
     {% block scripts %}{% endblock %}
+
+<div class="container" id="footerdiv">
+<p>Copyright &copy; 2014 
+  <a href="http://katrinaeg.com">Katrina Ellison Geltman</a>
+</p>
+<p><a href="http://echonest.com">
+<img src="{{ url_for('static', filename='echonest_logo.gif') }}" />
+</a>
+</p>
+
+</div>
 </body>
 </html>

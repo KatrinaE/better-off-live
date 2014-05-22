@@ -63,11 +63,19 @@ text-align: center;
 }
 
 
+#footerdiv {
+    text-align: center;
+}
 
 
+a {
+color: gray;
+}
 
-
-
+a:hover {
+color: gray;
+text-decoration: underline;
+}
 
 .label {
     font-size:0.9em;

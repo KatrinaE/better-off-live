@@ -21,7 +21,7 @@ $( function() {
 	    } else {
 		var color = 'red';
 	    }
-	    return "<p><span style='font-size:24px;'>" + d.title + "</span></p>\
+	    return "<p><span style='font-size:18px;'>" + d.title + "</span></p>\
 <p>Live hotttnesss: <span style='color:" + color + "'>" + Math.round(d.live_value * 100) / 100 + "</span></p>\
 <p>Regular hotttnesss: <span style='color:" + color + "'>" + Math.round(d.regular_value * 100) / 100 + "</span></p>\
 <p>Score: <span style='color:" + 'magenta' + "'>" + Math.round(d.score * 100) / 100 + "</span></p>";
