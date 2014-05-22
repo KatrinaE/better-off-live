@@ -9,10 +9,11 @@ from .utils import format_title, separate_versions, compare_versions
 @app.route('/')
 @app.route('/index')
 def index():
-    artist = string.capwords(flask.request.args.get('artist', None))
+    artist = flask.request.args.get('artist', None)
     if artist == None:
         return flask.render_template('index.html', data=False, artist=artist)
     else:
+        artist = string.capwords(artist)
         return en_data(artist)
 
 def en_data(artist):
