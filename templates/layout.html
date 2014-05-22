@@ -1,13 +1,19 @@
 <!doctype html>
-<title>Flaskr</title>
-<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-<script src="http://d3js.org/d3.v3.min.js" type="text/javascript" charset="utf-8"></script> 
-
-{% block body %}
-<div class=page>
-  <h1>KATRINA</h1>
-  <div class="chart">
-  </div>
+<meta charset="utf-8">
+<head>
+  <title>{% block title %}Fahrenheit Live{% endblock %}</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+<div class='container' id='maindiv'>
+  <h1>{% block h1 %}{% endblock %}</h1>
+  <h2><small>{% block h2 %}{% endblock %}</small></h2>
+  <p>{% block description %}{% endblock %}</p>
+  <p>{% block select %}{% endblock %}</p>
+  <p>{% block msg %}{% endblock %}</p>
 </div>
-{% endblock %}
+
+    {% block scripts %}{% endblock %}
+</body>
 </html>

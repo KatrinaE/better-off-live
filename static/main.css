@@ -1,3 +1,36 @@
+.myform {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main-form {
+max-width: 400px;
+}
+
+#artist {
+    width:325px; 
+    height:35px;
+}
+
+artist-submit-button {
+}
+
+.container {
+    max-width: 730px;
+}
+
+
+.btn-primary {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+.btn-primary:hover {
+background-color: gray;
+border-color: gray;
+}
+
+
 .d3-tip {
   line-height: 1;
   font-weight: bold;

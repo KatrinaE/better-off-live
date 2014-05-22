@@ -1,49 +1,5 @@
 $( function() {
 
-    /*
-    var data = [{ 'title': 'Some song',
-		  'score': -0.5
-		},
-		{ 'title': 'Another song',
-		  'score': 0.0954
-		},
-		{ 'title': 'Song 3',
-		  'score': 0.105
-		},
-		{ 'title': 'Song 4',
-		  'score': 0.950
-		},
-		{ 'title': 'Aer song',
-		  'score': 0.2354
-		},
-		{ 'title': 'Sg 3',
-		  'score': 0.4105
-		},
-		{ 'title': 'ng 4',
-		  'score': -0.3050
-		},
-	       ]
-    */
-
-/*var data = [{"score": -0.086993, 
-	     "title": "Man In The Mirror"}, 
-	    {"score": 0.14327250000000002, 
-	     "title": "Smooth Criminal"}, 
-	    {"score": -0.09854300000000002, 
-	     "title": "This Place Hotel"}, 
-	    {"score": 0.0, 
-	     "title": "Working Day And Night"}, 
-	    {"score": 0.03550199999999998, 
-	     "title": "Dirty Diana"}, 
-	    {"score": 0.0, 
-	     "title": "Leave Me Alone"}, 
-	    {"score": -0.1787125, 
-	     "title": "Beat It"}, 
-	    {"score": -0.2711230833333333, 
-	     "title": "Thriller"}, 
-	    {"score": -0.1723506666666667, 
-	     "title": "Wanna Be Startin' Somethin'"}]
-*/
     var chart,
         bars,
         w = 8,
@@ -52,8 +8,8 @@ $( function() {
         xAxis, yAxis;
 
     var margin = {top: 50, right: 50, bottom: 50, left: 50},
-    width = 800 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = Math.min(document.getElementById("maindiv").offsetWidth, 800) - margin.left - margin.right,
+    height = width*.67 - margin.top - margin.bottom;
 
 
     var tip = d3.tip()
@@ -113,8 +69,8 @@ $( function() {
         .attr("y",-margin.left)
         .attr("x",-(height / 2))
         .attr("dy", "1em")
-        .style("text-anchor", "middle")
-        .text("Difference Between Live and Studio Version");
+        .style("text-anchor", "middle");
+        //.text("Difference Between Live and Studio Version");
 
     chart.selectAll(".bar")
 	.data(data)

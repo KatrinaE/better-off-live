@@ -1,20 +1,37 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-  <head>
-    <title>microblog</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-  </head>
-  <body>
-    <div id='maindiv', class='container'>
-        <h1>Fahrenheit Live</h1>
-	<p>Which is better: the live version or the studio recording? Fahrenheit Live
-lets you visualize which of an artist's songs did better in each setting.</p>
+{% extends "layout.html" %}
+
+{% block h1 %}Fahrenheit Live{% endblock %}
+{% block h2 %}Which is hotter: the live version or the studio recording? {% endblock %}
+
+{% block description %}
+Fahrenheit Live lets you visualize which of an artist's songs did better in each 
+setting.
+{% endblock %}
+
+{% block select %}
+<form role="form" action="/" method=get class="myform" id="main-form">
+    <div class="form-inline form-group">
+      <input class="form-inline control-label myform" autofocus="" required="" name="artist" placeholder="Beyonce" id="artist">
+	<button class="btn btn-primary myform" type="submit">Search</button>
     </div>
+</form>
+
+{% endblock %}
+
+{% block msg %}
+    {% if msg %}
+        {{ msg }}
+    {% endif %}
+{% endblock %}
+
+
+{% block scripts %}
     <script>var data = JSON.parse({{data|tojson|safe}});</script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}" type="text/javascript" charset="utf-8"></script>
-  </body>
-</html>
+    {% if data %}
+    <script src="{{ url_for('static', filename='js/script.js') }}" 
+	    type="text/javascript" charset="utf-8"></script>
+    {% endif %}
+{% endblock %}
