@@ -2,12 +2,19 @@
 <meta charset="utf-8">
   <head>
     <title>microblog</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
   </head>
   <body>
-    <h1>Hello, {{data}}!</h1>
-    <div class="chart">
+    <div id='maindiv', class='container'>
+        <h1>Fahrenheit Live</h1>
+	<p>Which is better: the live version or the studio recording? Fahrenheit Live
+lets you visualize which of an artist's songs did better in each setting.</p>
     </div>
+    <script>var data = JSON.parse({{data|tojson|safe}});</script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ url_for('static', filename='js/barchart-basic.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}" type="text/javascript" charset="utf-8"></script>
   </body>
 </html>

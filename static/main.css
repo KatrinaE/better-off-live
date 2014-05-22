@@ -1,0 +1,47 @@
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.chart {
+    background-color: ;
+    margin-left:auto;
+    margin-right:auto;
+    display: block;
+}
+
+.chart rect {
+    stroke: white;
+    fill: orange;
+}
+
+.chart rect {
+    stroke: white;
+    fill: orange;
+}
+
+.chart rect:hover {
+    fill: magenta;
+}
+
+.bar.positive {
+  fill: orange;
+}
+
+.bar.negative {
+  fill: red;
+}
+
+.axis {
+    shape-rendering: crispEdges;
+    fill: transparent;
+}
+
+.axis text {
+    font-size: 14px;
+    fill: #888888;
+}}

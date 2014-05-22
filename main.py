@@ -1,5 +1,6 @@
 import sys
 import re
+import string
 import json
 import pyen
 import flask
@@ -12,7 +13,7 @@ def is_live(song):
 def format_title(song):
     """Removes expressions in parens and makes everything title case."""
     remove_parens = lambda s:  re.sub('(\s|^)\(.*\)','', s)
-    song['title'] = remove_parens(song['title']).title()
+    song['title'] = remove_parens(string.capwords(song['title']))
     return song
 
 def avg(values):
@@ -21,11 +22,9 @@ def avg(values):
 @app.route('/')
 @app.route('/index')
 def en_data():
-    artist = 'Michael Jackson'
+    artist = 'Lady GaGa'
     comparator = 'song_hotttnesss'
     en = pyen.Pyen()
-    #artist = sys.argv[1]
-    #comparator = sys.argv[2]
     raw_response = en.get('song/search', 
                           artist = artist,
                           bucket=['song_type', comparator], 
@@ -55,10 +54,10 @@ def en_data():
     output = [{ 'title': title,
                 'score': avg(values['live']) - avg(values['regular']) }
               for (title, values) in comparator_data.iteritems()]
+    sorted_output = sorted(output, key=lambda d: d['score'])
+    output_json = json.dumps(sorted_output)
 
-    output_json = json.dumps(output, sort_keys=True)
-
-    return flask.render_template('index2.html', json=output_json)
+    return flask.render_template('index.html', data=output_json)
 
 
 if __name__ == '__main__':
