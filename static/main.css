@@ -50,23 +50,28 @@ border-color: gray;
 .chart rect {
     stroke: white;
     fill: orange;
-}
-
-.chart rect {
-    stroke: white;
-    fill: orange;
+    border: 0;
+    stroke: 0;
+    stroke-opacity:0;
 }
 
 .chart rect:hover {
     fill: magenta;
+    border: 0;
+    stroke: 0;
+    stroke-opacity: 0;
 }
 
 .bar.positive {
   fill: orange;
+  border: 0;
+  stroke: 0;
 }
 
 .bar.negative {
   fill: red;
+  border: 0;
+  stroke: 0;
 }
 
 .axis {

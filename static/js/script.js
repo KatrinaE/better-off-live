@@ -16,7 +16,7 @@ $( function() {
 	.attr('class', 'd3-tip')
 	.offset([-10, 0])
 	.html(function(d) {
-	    return "<strong>" + d.title + "</strong> <span style='color:magenta'>" + Math.round(d.score * 100) / 100 + "</span>";
+	    return "<strong>" + d.title + "</strong> <p>Live: " + Math.round(d.live * 100) / 100 + "</p><p><span style='color:magenta'>" + Math.round(d.score * 100) / 100 + "</span></p>";
 	})
 
     chart = d3.select( '#maindiv' ).append( 'svg' )
@@ -34,6 +34,8 @@ $( function() {
     x = d3.scale.ordinal()
 	.domain(data.map(function(d) { return d.title; }))
 	.rangeRoundBands([0, width], .1);
+
+    console.log(data.map(function(d) { return d.title; }));
 
     y = d3.scale.linear()
 	.domain([-1, 1])//d3.max(data, function(d) { return d.score; })])
@@ -72,6 +74,17 @@ $( function() {
         .style("text-anchor", "middle");
         //.text("Difference Between Live and Studio Version");
 
+    console.log(x(0))
+    var myLine = chart.append("svg:line")
+	.attr("x1", x(0))
+	.attr("y1", y(0))
+	.attr("x2", width)
+	.attr("y2", y(0))
+	.style("stroke", "rgb(200,200,200")//"rgb(6,120,155)");
+	.style("stroke-dasharray", ("4, 2"));
+    myLine.style("stroke-width", 2);
+
+
     chart.selectAll(".bar")
 	.data(data)
 	.enter().append("rect")
@@ -86,6 +99,7 @@ $( function() {
 	.on('mouseout', tip.hide);
 
 
+// Wrap x-axis labels so they don't overlap
 // From http://bl.ocks.org/mbostock/7555321
 function wrap(text, width) {
   text.each(function() {
