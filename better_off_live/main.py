@@ -23,7 +23,7 @@ def en_data(artist):
         raw_response = en.get('song/search', 
                               artist = artist,
                               bucket=['song_type', 'song_hotttnesss'], 
-                              sort=['liveness-desc'], 
+                              #sort=['title-asc'], 
                               results=100)
     except pyen.PyenException, pyen.PyenConfigurationException:
         data = False
