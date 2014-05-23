@@ -1,3 +1,4 @@
+import os
 from better_off_live.main import app
 
 if __name__ == "__main__":
